@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Logowanie</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="index.css">
     <script src="https://www.gstatic.com/firebasejs/8.3.3/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.3.3/firebase-auth.js"></script>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
@@ -54,32 +54,38 @@
 </head>
 
 <body>
-    <h1>Logowanie</h1>
 
-    <button onclick="signInWithGoogle()">Zaloguj przez konto Google</button>
+    <div class="form">
+        <h1 class="title">Logowanie</h1>
 
-    <div class="recaptcha-container">
-        <div class="g-recaptcha" data-sitekey="6LcPOkcmAAAAAGLGBmRq2OEx9vzku8YL7IskibvF" data-callback="onReCaptchaVerified"></div>
-        <input type="hidden" id="recaptcha-response" name="recaptcha-response">
-    </div>
 
-    <script>
-        function onloadCallback() {
-            grecaptcha.render('recaptcha-container', {
-                'sitekey': '6LcPOkcmAAAAAGLGBmRq2OEx9vzku8YL7IskibvF',
-                'callback': onReCaptchaVerified
-            });
-        }
-    </script>
+        <button class="google" onclick="signInWithGoogle()">Zaloguj przez konto Google</button>
 
-    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
+        <div class="recaptcha">
 
-    <script>
-        // Blokowanie możliwości bezpośredniego połączenia plików cookie
-        if (window.location.protocol === "http:" && document.cookie.indexOf("same-site-cookie=1") === -1) {
-            document.cookie = "same-site-cookie=1; secure; same-site=strict";
-        }
-    </script>
+
+            <div class="recaptcha-container">
+                <div class="g-recaptcha" data-sitekey="6LcPOkcmAAAAAGLGBmRq2OEx9vzku8YL7IskibvF" data-callback="onReCaptchaVerified"></div>
+                <input type="hidden" id="recaptcha-response" name="recaptcha-response">
+            </div>
+
+            <script>
+                function onloadCallback() {
+                    grecaptcha.render('recaptcha-container', {
+                        'sitekey': '6LcPOkcmAAAAAGLGBmRq2OEx9vzku8YL7IskibvF',
+                        'callback': onReCaptchaVerified
+                    });
+                }
+            </script>
+
+            <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
+        </div>
+        <script>
+            // Blokowanie możliwości bezpośredniego połączenia plików cookie
+            if (window.location.protocol === "http:" && document.cookie.indexOf("same-site-cookie=1") === -1) {
+                document.cookie = "same-site-cookie=1; secure; same-site=strict";
+            }
+        </script>
 </body>
 
 </html>
