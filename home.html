@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strona główna</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://www.gstatic.com/firebasejs/8.3.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.3/firebase-auth.js"></script>
+    <script>
+        // Inicjalizacja Firebase
+        var firebaseConfig = {
+            apiKey: "AIzaSyC9Bi9X5I1p95yt939gZzMdJrNanJl2k2E",
+            authDomain: "seeds-43994.firebaseapp.com",
+            projectId: "seeds-43994",
+            appId: "1:763199682876:web:55276a0c3cd343ea6dc639",
+            measurementId: "G-NT09JM0BY2"
+        };
+        firebase.initializeApp(firebaseConfig);
+
+        // Obserwator stanu logowania
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (!user) {
+                // Użytkownik niezalogowany
+                window.location.href = "index.html";
+            }
+        });
+
+        // Funkcja wylogowywania
+        function signOut() {
+            firebase.auth().signOut().then(function() {
+                // Wylogowano użytkownika
+                window.location.href = "index.html";
+            }).catch(function(error) {
+                // Błąd podczas wylogowywania
+                console.log(error);
+            });
+        }
+    </script>
+</head>
+
+<body>
+    <h1>Witaj na stronie głównej!</h1>
+
+    <button onclick="signOut()">Wyloguj</button>
+    <a href="settings.html">
+        <button>Ustawienia</button>
+    </a>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+</body>
+
+</html>

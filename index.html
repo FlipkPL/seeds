@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logowanie</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://www.gstatic.com/firebasejs/8.3.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.3/firebase-auth.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script>
+        // Inicjalizacja Firebase
+        var firebaseConfig = {
+            apiKey: "AIzaSyC9Bi9X5I1p95yt939gZzMdJrNanJl2k2E",
+            authDomain: "seeds-43994.firebaseapp.com",
+            projectId: "seeds-43994",
+            appId: "1:763199682876:web:55276a0c3cd343ea6dc639",
+            measurementId: "G-NT09JM0BY2"
+        };
+        firebase.initializeApp(firebaseConfig);
+
+        // Funkcja do logowania z kontem Google
+        function signInWithGoogle() {
+            var recaptchaResponse = document.getElementById('recaptcha-response').value;
+            if (recaptchaResponse === '') {
+                // ReCAPTCHA nie została zweryfikowana
+                alert("Potwierdź, że nie jesteś robotem!");
+                return;
+            }
+
+            var provider = new firebase.auth.GoogleAuthProvider();
+            provider.setCustomParameters({
+                'login_hint': 'user@example.com',
+                'requireDisplayName': false
+            });
+
+            firebase.auth().signInWithRedirect(provider);
+        }
+
+        // Obserwator stanu logowania
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                // Użytkownik zalogowany
+                window.location.href = "home.html";
+            }
+        });
+
+        // Obsługa zdarzenia po weryfikacji reCAPTCHA
+        function onReCaptchaVerified(response) {
+            document.getElementById('recaptcha-response').value = response;
+        }
+    </script>
+</head>
+
+<body>
+    <h1>Logowanie</h1>
+
+    <button onclick="signInWithGoogle()">Zaloguj przez konto Google</button>
+
+    <div class="recaptcha-container">
+        <div class="g-recaptcha" data-sitekey="6LcPOkcmAAAAAGLGBmRq2OEx9vzku8YL7IskibvF" data-callback="onReCaptchaVerified"></div>
+        <input type="hidden" id="recaptcha-response" name="recaptcha-response">
+    </div>
+
+    <script>
+        function onloadCallback() {
+            grecaptcha.render('recaptcha-container', {
+                'sitekey': '6LcPOkcmAAAAAGLGBmRq2OEx9vzku8YL7IskibvF',
+                'callback': onReCaptchaVerified
+            });
+        }
+    </script>
+
+    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
+</body>
+
+</html>
