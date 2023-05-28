@@ -1,4 +1,5 @@
 /* Styl dla elementów głównych */
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -22,33 +23,60 @@ p {
     color: #666;
 }
 
+
 /* Przykładowe style dla elementów/div */
 
+
 /* Styl dla elementu o klasie "box" */
-.box {
-    background-color: #f2f2f2;
-    padding: 20px;
-    margin-bottom: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+.form {
+    background-color: #143eb1;
+    margin-left: 500px;
+    margin-right: 500px;
+    margin-top: 70px;
+    border-radius: 30px;
 }
+
 
 /* Styl dla elementu o klasie "button" */
-.button {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #333;
-    color: #fff;
+
+.title {
+    color: white;
+    margin-left: 235px;
+    margin-right: 235px;
+    margin-top: 50px;
+}
+
+.google {
+    display: flex;
+    padding: 13px 23px;
+    background-color: #399dfb;
+    color: #ffffff;
     text-decoration: none;
     border-radius: 5px;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.5s ease;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.button:hover {
-    background-color: #555;
+.google:hover {
+    background-color: #2d7dc8;
 }
+
+.recaptcha {
+    display: flex;
+    padding: 13px 23px;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.5s ease;
+    margin-left: 147.9px;
+    margin-right: 147.9px;
+}
+
 
 /* Styl dla elementu o klasie "animation" */
+
 .animation {
     width: 100px;
     height: 100px;
@@ -65,86 +93,111 @@ p {
     }
 }
 
+
 /* Media queries dla skalowania strony na różne urządzenia */
 
+
 /* Dla urządzeń o szerokości od 320px */
+
 @media only screen and (min-width: 320px) {
     body {
         font-size: 14px;
     }
 }
 
+
 /* Dla urządzeń o szerokości od 480px */
+
 @media only screen and (min-width: 480px) {
     body {
         font-size: 16px;
     }
 }
 
+
 /* Dla urządzeń o szerokości od 768px */
+
 @media only screen and (min-width: 768px) {
     body {
         font-size: 18px;
     }
 }
 
+
 /* Dla urządzeń o szerokości od 1024px */
+
 @media only screen and (min-width: 1024px) {
     body {
         font-size: 20px;
     }
 }
 
+
 /* Dla urządzeń o szerokości od 1200px */
+
 @media only screen and (min-width: 1200px) {
     body {
         font-size: 22px;
     }
 }
 
+
 /* Dla urządzeń o szerokości od 1440px */
+
 @media only screen and (min-width: 1440px) {
     body {
         font-size: 24px;
     }
 }
 
+
 /* Dla urządzeń o szerokości od 1680px */
+
 @media only screen and (min-width: 1680px) {
     body {
         font-size: 26px;
     }
 }
 
+
 /* Dla urządzeń o szerokości od 1920px */
+
 @media only screen and (min-width: 1920px) {
     body {
         font-size: 28px;
     }
 }
 
+
 /* Dla urządzeń o szerokości od 2560px */
+
 @media only screen and (min-width: 2560px) {
     body {
         font-size: 30px;
     }
 }
 
+
 /* Dla urządzeń o szerokości od 3840px */
+
 @media only screen and (min-width: 3840px) {
     body {
         font-size: 32px;
     }
 }
 
+
 /* Dla urządzeń o szerokości od 5120px */
+
 @media only screen and (min-width: 5120px) {
     body {
         font-size: 34px;
     }
 }
 
+
 /* Dla urządzeń o szerokości od 7680px */
+
 @media only screen and (min-width: 7680px) {
     body {
         font-size: 36px;
