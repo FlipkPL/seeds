@@ -19,13 +19,7 @@
         };
         firebase.initializeApp(firebaseConfig);
 
-        // Obserwator stanu logowania
-        firebase.auth().onAuthStateChanged(function(user) {
-            if (!user) {
-                // Użytkownik niezalogowany
-                window.location.href = "index.html";
-            }
-        });
+        
 
         
     </script>
@@ -34,7 +28,6 @@
 <body>
     <h1>Ustawienia</h1>
     <p>Tutaj możesz dostosować swoje ustawienia.</p>
-    <button onclick="signOut()">Wyloguj</button>
 
     <a href="home.html">
         <button>Strona Główna</button>
