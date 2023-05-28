@@ -34,20 +34,9 @@
 <body>
     <h1>Ustawienia</h1>
     <p>Tutaj możesz dostosować swoje ustawienia.</p>
-    <button onclick="signOut()">Wyloguj</button>
+    <a herf="home.html"></a><button>Wyloguj</button></a>
 
-    <script>
-        // Funkcja wylogowywania
-        function signOut() {
-            firebase.auth().signOut().then(function() {
-                // Wylogowano użytkownika
-                window.location.href = "index.html";
-            }).catch(function(error) {
-                // Błąd podczas wylogowywania
-                console.log(error);
-            });
-        }
-    </script>
+    
 </body>
 
 </html>
