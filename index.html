@@ -40,6 +40,13 @@
 
         // Funkcja do logowania z podanym loginem i hasłem
         function signInWithEmailAndPassword() {
+            var recaptchaResponse = document.getElementById('recaptcha-response').value;
+            if (recaptchaResponse === '') {
+                // ReCAPTCHA nie została zweryfikowana
+                alert("Potwierdź, że nie jesteś robotem!");
+                return;
+            }
+
             var email = document.getElementById('email').value;
             var password = document.getElementById('password').value;
 
@@ -79,14 +86,12 @@
         <h1 class="title">Logowanie</h1>
 
         <div class="google">
-            <button onclick="signInWithGoogle()"><img src="google-logo.svg" alt="Google Logo"> Zaloguj przez konto Google</button>
+            <button onclick="signInWithGoogle()"><img src="google_logo.png" alt="Google Logo"> Zaloguj przez konto Google</button>
         </div>
 
-        <input type="email" id="email" placeholder="Adres email" required>
-        <br>
-        <input type="password" id="password" placeholder="Hasło" required>
-        <br>
-        <button onclick="signInWithEmailAndPassword()">Zaloguj</button>
+        <input type="email" id="email" placeholder="Email">
+        <input type="password" id="password" placeholder="Hasło">
+        <button onclick="signInWithEmailAndPassword()">Zaloguj przez login i hasło</button>
 
         <div class="recaptcha">
             <div class="recaptcha-container">
@@ -96,7 +101,7 @@
             <script>
                 function onloadCallback() {
                     grecaptcha.render('recaptcha-container', {
-                        'sitekey': 'YOUR_RECAPTCHA_SITE_KEY',
+                        'sitekey': '6LcPOkcmAAAAAGLGBmRq2OEx9vzku8YL7IskibvF',
                         'callback': onReCaptchaVerified
                     });
                 }
