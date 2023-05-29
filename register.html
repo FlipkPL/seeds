@@ -31,9 +31,23 @@
 
             var email = document.getElementById('email').value;
             var password = document.getElementById('password').value;
+            var confirmPassword = document.getElementById('confirm-password').value;
+            var birthDate = new Date(document.getElementById('birth-date').value);
+            var minAgeDate = new Date();
+            minAgeDate.setFullYear(minAgeDate.getFullYear() - 13);
 
-            if (email === '' || password === '') {
-                alert("Podaj adres email i hasło!");
+            if (email === '' || password === '' || confirmPassword === '' || birthDate === '') {
+                alert("Wypełnij wszystkie pola!");
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                alert("Podane hasła nie są identyczne!");
+                return;
+            }
+
+            if (birthDate > minAgeDate) {
+                alert("Musisz mieć co najmniej 13 lat, aby się zarejestrować!");
                 return;
             }
 
@@ -62,16 +76,18 @@
 
         <input type="email" id="email" placeholder="Email">
         <input type="password" id="password" placeholder="Hasło">
+        <input type="password" id="confirm-password" placeholder="Powtórz hasło">
+        <input type="date" id="birth-date" placeholder="Data urodzenia">
 
         <div class="recaptcha">
             <div class="recaptcha-container">
-                <div class="g-recaptcha" data-sitekey="6LcPOkcmAAAAAGLGBmRq2OEx9vzku8YL7IskibvF" data-callback="onReCaptchaVerified"></div>
+                <div class="g-recaptcha" data-sitekey="wWRDQ4vI4PTmcvqMjacHvzgTNxu2" data-callback="onReCaptchaVerified"></div>
                 <input type="hidden" id="recaptcha-response" name="recaptcha-response">
             </div>
             <script>
                 function onloadCallback() {
                     grecaptcha.render('recaptcha-container', {
-                        'sitekey': '6LcPOkcmAAAAAGLGBmRq2OEx9vzku8YL7IskibvF',
+                        'sitekey': 'wWRDQ4vI4PTmcvqMjacHvzgTNxu2',
                         'callback': onReCaptchaVerified
                     });
                 }
