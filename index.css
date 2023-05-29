@@ -1,205 +1,68 @@
-/* Styl dla elementów głównych */
+/* index.css */
 
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f5f5f5;
 }
 
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
+.form {
+    width: 300px;
     padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
 }
 
-h1 {
-    font-size: 32px;
-    color: #333;
+.title {
+    font-size: 30px;
     margin-bottom: 20px;
 }
 
-p {
-    font-size: 18px;
-    color: #666;
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
 }
 
-
-/* Przykładowe style dla elementów/div */
-
-
-/* Styl dla elementu o klasie "box" */
-
-.form {
-    background-color: #143eb1;
-    margin-left: 500px;
-    margin-right: 500px;
-    margin-top: 70px;
-    border-radius: 30px;
-}
-
-
-/* Styl dla elementu o klasie "button" */
-
-.title {
-    color: white;
-    margin-left: 235px;
-    margin-right: 235px;
-    margin-top: 50px;
+button {
+    background-color: #2f58ff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 2px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    width: 100%;
 }
 
 .google {
     display: flex;
-    padding: 13px 23px;
-    background-color: #399dfb;
-    color: #ffffff;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.5s ease;
-    margin-left: auto;
-    margin-right: auto;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 10px;
 }
 
-.google:hover {
-    background-color: #2d7dc8;
+.google img {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
 }
 
 .recaptcha {
-    display: flex;
-    padding: 13px 23px;
-    color: #ffffff;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.5s ease;
-    margin-left: 147.9px;
-    margin-right: 147.9px;
+    margin-top: 20px;
+    text-align: left;
 }
 
-
-/* Styl dla elementu o klasie "animation" */
-
-.animation {
-    width: 100px;
-    height: 100px;
-    background-color: #f44336;
-    animation: rotate 2s infinite ease;
-}
-
-@keyframes rotate {
-    0% {
-        transform: rotate(0);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
-
-/* Media queries dla skalowania strony na różne urządzenia */
-
-
-/* Dla urządzeń o szerokości od 320px */
-
-@media only screen and (min-width: 320px) {
-    body {
-        font-size: 14px;
-    }
-}
-
-
-/* Dla urządzeń o szerokości od 480px */
-
-@media only screen and (min-width: 480px) {
-    body {
-        font-size: 16px;
-    }
-}
-
-
-/* Dla urządzeń o szerokości od 768px */
-
-@media only screen and (min-width: 768px) {
-    body {
-        font-size: 18px;
-    }
-}
-
-
-/* Dla urządzeń o szerokości od 1024px */
-
-@media only screen and (min-width: 1024px) {
-    body {
-        font-size: 20px;
-    }
-}
-
-
-/* Dla urządzeń o szerokości od 1200px */
-
-@media only screen and (min-width: 1200px) {
-    body {
-        font-size: 22px;
-    }
-}
-
-
-/* Dla urządzeń o szerokości od 1440px */
-
-@media only screen and (min-width: 1440px) {
-    body {
-        font-size: 24px;
-    }
-}
-
-
-/* Dla urządzeń o szerokości od 1680px */
-
-@media only screen and (min-width: 1680px) {
-    body {
-        font-size: 26px;
-    }
-}
-
-
-/* Dla urządzeń o szerokości od 1920px */
-
-@media only screen and (min-width: 1920px) {
-    body {
-        font-size: 28px;
-    }
-}
-
-
-/* Dla urządzeń o szerokości od 2560px */
-
-@media only screen and (min-width: 2560px) {
-    body {
-        font-size: 30px;
-    }
-}
-
-
-/* Dla urządzeń o szerokości od 3840px */
-
-@media only screen and (min-width: 3840px) {
-    body {
-        font-size: 32px;
-    }
-}
-
-
-/* Dla urządzeń o szerokości od 5120px */
-
-@media only screen and (min-width: 5120px) {
-    body {
-        font-size: 34px;
-    }
-}
-
-
-/* Dla urządzeń o szerokości od 7680px */
-
-@media only screen and (min-width: 7680px) {
-    body {
-        font-size: 36px;
-    }
+.recaptcha-container {
+    margin-bottom: 10px;
 }
