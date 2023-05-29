@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rejestracja</title>
+    <link rel="stylesheet" type="text/css" href="register.css">
+    <script src="https://www.gstatic.com/firebasejs/8.3.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.3/firebase-auth.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script>
+        // Inicjalizacja Firebase
+        var firebaseConfig = {
+            apiKey: "AIzaSyC9Bi9X5I1p95yt939gZzMdJrNanJl2k2E",
+            authDomain: "seeds-43994.firebaseapp.com",
+            projectId: "seeds-43994",
+            appId: "1:763199682876:web:55276a0c3cd343ea6dc639",
+            measurementId: "G-NT09JM0BY2"
+        };
+        firebase.initializeApp(firebaseConfig);
+
+        // Funkcja do rejestracji nowego użytkownika
+        function signUpWithEmailAndPassword() {
+            var recaptchaResponse = document.getElementById('recaptcha-response').value;
+            if (recaptchaResponse === '') {
+                // ReCAPTCHA nie została zweryfikowana
+                alert("Potwierdź, że nie jesteś robotem!");
+                return;
+            }
+
+            var email = document.getElementById('email').value;
+            var password = document.getElementById('password').value;
+
+            if (email === '' || password === '') {
+                alert("Podaj adres email i hasło!");
+                return;
+            }
+
+            firebase.auth().createUserWithEmailAndPassword(email, password)
+                .then(function() {
+                    // Użytkownik zarejestrowany pomyślnie
+                    alert("Zarejestrowano pomyślnie!");
+                    window.location.href = "login.html";
+                })
+                .catch(function(error) {
+                    // Wystąpił błąd rejestracji
+                    alert("Błąd rejestracji: " + error.message);
+                });
+        }
+
+        // Obsługa zdarzenia po weryfikacji reCAPTCHA
+        function onReCaptchaVerified(response) {
+            document.getElementById('recaptcha-response').value = response;
+        }
+    </script>
+</head>
+
+<body>
+    <div class="form">
+        <h1 class="title">Rejestracja</h1>
+
+        <input type="email" id="email" placeholder="Email">
+        <input type="password" id="password" placeholder="Hasło">
+
+        <div class="recaptcha">
+            <div class="recaptcha-container">
+                <div class="g-recaptcha" data-sitekey="6LcPOkcmAAAAAGLGBmRq2OEx9vzku8YL7IskibvF" data-callback="onReCaptchaVerified"></div>
+                <input type="hidden" id="recaptcha-response" name="recaptcha-response">
+            </div>
+            <script>
+                function onloadCallback() {
+                    grecaptcha.render('recaptcha-container', {
+                        'sitekey': '6LcPOkcmAAAAAGLGBmRq2OEx9vzku8YL7IskibvF',
+                        'callback': onReCaptchaVerified
+                    });
+                }
+            </script>
+            <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
+        </div>
+
+        <button onclick="signUpWithEmailAndPassword()">Zarejestruj się</button>
+    </div>
+</body>
+
+</html>
