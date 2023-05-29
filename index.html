@@ -12,11 +12,11 @@
     <script>
         // Inicjalizacja Firebase
         var firebaseConfig = {
-            apiKey: "AIzaSyC9Bi9X5I1p95yt939gZzMdJrNanJl2k2E",
-            authDomain: "seeds-43994.firebaseapp.com",
-            projectId: "seeds-43994",
-            appId: "1:763199682876:web:55276a0c3cd343ea6dc639",
-            measurementId: "G-NT09JM0BY2"
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            appId: "YOUR_APP_ID",
+            measurementId: "YOUR_MEASUREMENT_ID"
         };
         firebase.initializeApp(firebaseConfig);
 
@@ -38,6 +38,27 @@
             firebase.auth().signInWithRedirect(provider);
         }
 
+        // Funkcja do logowania z podanym loginem i hasłem
+        function signInWithEmailAndPassword() {
+            var email = document.getElementById('email').value;
+            var password = document.getElementById('password').value;
+
+            if (email === '' || password === '') {
+                alert("Podaj adres email i hasło!");
+                return;
+            }
+
+            firebase.auth().signInWithEmailAndPassword(email, password)
+                .then(function() {
+                    // Zalogowano pomyślnie
+                    window.location.href = "home.html";
+                })
+                .catch(function(error) {
+                    // Wystąpił błąd logowania
+                    alert("Błąd logowania: " + error.message);
+                });
+        }
+
         // Obserwator stanu logowania
         firebase.auth().onAuthStateChanged(function(user) {
             if (user) {
@@ -54,38 +75,44 @@
 </head>
 
 <body>
-
     <div class="form">
         <h1 class="title">Logowanie</h1>
 
+        <div class="google">
+            <button onclick="signInWithGoogle()"><img src="google-logo.svg" alt="Google Logo"> Zaloguj przez konto Google</button>
+        </div>
 
-        <button class="google" onclick="signInWithGoogle()">Zaloguj przez konto Google</button>
+        <input type="email" id="email" placeholder="Adres email" required>
+        <br>
+        <input type="password" id="password" placeholder="Hasło" required>
+        <br>
+        <button onclick="signInWithEmailAndPassword()">Zaloguj</button>
 
         <div class="recaptcha">
-
-
             <div class="recaptcha-container">
-                <div class="g-recaptcha" data-sitekey="6LcPOkcmAAAAAGLGBmRq2OEx9vzku8YL7IskibvF" data-callback="onReCaptchaVerified"></div>
+                <div class="g-recaptcha" data-sitekey="YOUR_RECAPTCHA_SITE_KEY" data-callback="onReCaptchaVerified"></div>
                 <input type="hidden" id="recaptcha-response" name="recaptcha-response">
             </div>
-
             <script>
                 function onloadCallback() {
                     grecaptcha.render('recaptcha-container', {
-                        'sitekey': '6LcPOkcmAAAAAGLGBmRq2OEx9vzku8YL7IskibvF',
+                        'sitekey': 'YOUR_RECAPTCHA_SITE_KEY',
                         'callback': onReCaptchaVerified
                     });
                 }
             </script>
-
             <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
         </div>
-        <script>
-            // Blokowanie możliwości bezpośredniego połączenia plików cookie
-            if (window.location.protocol === "http:" && document.cookie.indexOf("same-site-cookie=1") === -1) {
-                document.cookie = "same-site-cookie=1; secure; same-site=strict";
-            }
-        </script>
+
+        <button onclick="window.location.href = 'register.html'">Utwórz konto</button>
+    </div>
+
+    <script>
+        // Blokowanie możliwości bezpośredniego połączenia plików cookie
+        if (window.location.protocol === "http:" && document.cookie.indexOf("same-site-cookie=1") === -1) {
+            document.cookie = "same-site-cookie=1; secure; same-site=strict";
+        }
+    </script>
 </body>
 
 </html>
