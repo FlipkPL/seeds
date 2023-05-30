@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ustawienia</title>
+    <link rel="stylesheet" type="text/css" href="settings.css">
+    <script src="https://www.gstatic.com/firebasejs/8.3.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.3/firebase-auth.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script>
+        // Inicjalizacja Firebase
+        var firebaseConfig = {
+            apiKey: "AIzaSyC9Bi9X5I1p95yt939gZzMdJrNanJl2k2E",
+            authDomain: "seeds-43994.firebaseapp.com",
+            projectId: "seeds-43994",
+            appId: "1:763199682876:web:55276a0c3cd343ea6dc639",
+            measurementId: "G-NT09JM0BY2"
+        };
+        firebase.initializeApp(firebaseConfig);
+
+        // Sprawdzenie, czy użytkownik ma podpięte konto Google
+        function checkGoogleLinked() {
+            var user = firebase.auth().currentUser;
+            if (user) {
+                user.providerData.forEach(function(profile) {
+                    if (profile.providerId === 'google.com') {
+                        document.getElementById('change-email-section').style.display = 'none';
+                        document.getElementById('change-password-section').style.display = 'none';
+                    }
+                });
+            }
+        }
+
+        // Wywołanie funkcji sprawdzającej przy załadowaniu strony
+        window.onload = function() {
+            checkGoogleLinked();
+        };
+
+        // Zmiana adresu e-mail
+        function changeEmail() {
+            var recaptchaResponse = document.getElementById('recaptcha-response').value;
+            if (recaptchaResponse === '') {
+                alert("Potwierdź, że nie jesteś robotem!");
+                return;
+            }
+
+            var user = firebase.auth().currentUser;
+            var newEmail = document.getElementById('new-email').value;
+
+            var credential = firebase.auth.EmailAuthProvider.credential(
+                user.email,
+                document.getElementById('password-email').value
+            );
+
+            user.reauthenticateWithCredential(credential).then(function() {
+                user.updateEmail(newEmail).then(function() {
+                    alert("Adres e-mail został pomyślnie zmieniony!");
+                    document.getElementById('user-email').textContent = newEmail;
+                }).catch(function(error) {
+                    console.log(error);
+                    alert("Wystąpił błąd podczas zmiany adresu e-mail.");
+                });
+            }).catch(function(error) {
+                console.log(error);
+                alert("Wystąpił błąd podczas autoryzacji użytkownika.");
+            });
+        }
+
+        // Zmiana hasła
+        function changePassword() {
+            var recaptchaResponse = document.getElementById('recaptcha-response').value;
+            if (recaptchaResponse === '') {
+                alert("Potwierdź, że nie jesteś robotem!");
+                return;
+            }
+
+            var user = firebase.auth().currentUser;
+            var newPassword = document.getElementById('new-password').value;
+
+            var credential = firebase.auth.EmailAuthProvider.credential(
+                user.email,
+                document.getElementById('password-password').value
+            );
+
+            user.reauthenticateWithCredential(credential).then(function() {
+                user.updatePassword(newPassword).then(function() {
+                    alert("Hasło zostało pomyślnie zmienione!");
+                }).catch(function(error) {
+                    console.log(error);
+                    alert("Wystąpił błąd podczas zmiany hasła.");
+                });
+            }).catch(function(error) {
+                console.log(error);
+                alert("Wystąpił błąd podczas autoryzacji użytkownika.");
+            });
+        }
+
+        // Obsługa zdarzenia po weryfikacji reCAPTCHA dla zmiany adresu e-mail
+        function onReCaptchaVerified(response) {
+            document.getElementById('recaptcha-response').value = response;
+        }
+
+        // Obsługa zdarzenia po weryfikacji reCAPTCHA dla zmiany hasła
+        function onReCaptchaVerified(response) {
+            document.getElementById('recaptcha-response').value = response;
+        }
+    </script>
+</head>
+
+<body>
+    <div class="settings">
+        <h1 class="title">Ustawienia</h1>
+
+        <div id="change-email-section">
+            <span id="user-email">Adres e-mail użytkownika</span>
+            <div class="change-email-form">
+                <input type="email" id="new-email" placeholder="Nowy adres e-mail" required>
+                <input type="password" id="password-email" placeholder="Obecne hasło" required>
+                <button class="change-email-btn" onclick="changeEmail()">Zmień E-mail</button>
+            </div>
+        </div>
+
+        <div id="change-password-section">
+            <span id="user-password">Hasło użytkownika **********</span>
+            <div class="change-password-form">
+                <input type="password" id="new-password" placeholder="Nowe hasło" required>
+                <input type="password" id="password-password" placeholder="Obecne hasło" required>
+                <button class="change-password-btn" onclick="changePassword()">Zmień Hasło</button>
+                <div class="recaptcha-container">
+                    <div class="g-recaptcha" data-sitekey="6LcPOkcmAAAAAGLGBmRq2OEx9vzku8YL7IskibvF" data-callback="onReCaptchaVerified"></div>
+                    <input type="hidden" id="recaptcha-response" name="recaptcha-response">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sprawdzenie, czy strona jest ładowana bezpośrednio
+        if (window.location.protocol === "http:" && document.cookie.indexOf("same-site-cookie=1") === -1) {
+            // Przekierowanie użytkownika na inną stronę
+            window.location.href = "index.html"; // Zastąp "https://www.example.com" adresem URL, na który chcesz przekierować użytkownika
+        }
+    </script>
+
+</body>
+
+</html>
