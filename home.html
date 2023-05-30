@@ -31,6 +31,12 @@
             });
         }
 
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (!user) {
+                // Użytkownik niezalogowany
+                window.location.href = "index.html";
+            }
+        });
         
     </script>
 </head>
