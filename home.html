@@ -4,11 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Strona Główna</title>
+    <title>Uczniowie</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
     <script src="https://www.gstatic.com/firebasejs/8.3.3/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.3.3/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.3/firebase-firestore.js"></script>
     <script>
-        // Inicjalizacja Firebase
+       // Inicjalizacja Firebase
         var firebaseConfig = {
             apiKey: "AIzaSyC9Bi9X5I1p95yt939gZzMdJrNanJl2k2E",
             authDomain: "seeds-43994.firebaseapp.com",
@@ -17,7 +18,8 @@
             measurementId: "G-NT09JM0BY2"
         };
         firebase.initializeApp(firebaseConfig);
-        var database = firebase.database();
+        var db = firebase.firestore();
+
         // Funkcja wylogowywania
         function signOut() {
             firebase.auth().signOut().then(function() {
@@ -36,116 +38,95 @@
             }
         });
         
-        
 
         // Dodawanie ucznia
         function addStudent() {
-            var studentName = document.getElementById('student-name').value;
-            if (studentName === '') {
-                alert("Wprowadź imię ucznia!");
-                return;
-            }
+            var name = document.getElementById('name').value;
+            var number = document.getElementById('number').value;
 
-            var newStudentRef = database.ref('students').push();
-            newStudentRef.set({
-                name: studentName
-            }, function(error) {
-                if (error) {
-                    alert("Wystąpił błąd podczas dodawania ucznia.");
-                } else {
-                    alert("Uczeń został pomyślnie dodany.");
-                }
+            db.collection("students").add({
+                name: name,
+                number: number
+            }).then(function(docRef) {
+                alert("Uczeń dodany. ID: " + docRef.id);
+                document.getElementById('name').value = '';
+                document.getElementById('number').value = '';
+            }).catch(function(error) {
+                console.error("Błąd podczas dodawania ucznia: ", error);
             });
         }
 
         // Usuwanie ucznia
-        function deleteStudent(studentId) {
-            var confirmation = confirm("Czy na pewno chcesz usunąć tego ucznia?");
-            if (confirmation) {
-                var studentRef = database.ref('students/' + studentId);
-                studentRef.remove(function(error) {
-                    if (error) {
-                        alert("Wystąpił błąd podczas usuwania ucznia.");
-                    } else {
-                        alert("Uczeń został pomyślnie usunięty.");
-                    }
-                });
-            }
+        function deleteStudent(id) {
+            db.collection("students").doc(id).delete().then(function() {
+                alert("Uczeń usunięty. ID: " + id);
+            }).catch(function(error) {
+                console.error("Błąd podczas usuwania ucznia: ", error);
+            });
         }
 
-        // Wpisywanie punktów dla ucznia na dany dzień
-        function savePoints(studentId, day, points) {
-            var pointsRef = database.ref('points/' + studentId + '/' + day);
-            pointsRef.set(points, function(error) {
-                if (error) {
-                    alert("Wystąpił błąd podczas zapisywania punktów.");
-                } else {
-                    alert("Punkty zostały pomyślnie zapisane.");
-                }
+        // Pobieranie listy uczniów
+        function getStudents() {
+            var table = document.getElementById('students-table');
+            table.innerHTML = ''; // Wyczyszczenie tabeli
+
+            db.collection("students").get().then(function(querySnapshot) {
+                querySnapshot.forEach(function(doc) {
+                    var row = table.insertRow();
+                    var idCell = row.insertCell();
+                    var nameCell = row.insertCell();
+                    var numberCell = row.insertCell();
+                    var deleteCell = row.insertCell();
+
+                    idCell.textContent = doc.id;
+                    nameCell.textContent = doc.data().name;
+                    numberCell.textContent = doc.data().number;
+
+                    var deleteButton = document.createElement('button');
+                    deleteButton.textContent = 'Usuń';
+                    deleteButton.addEventListener('click', function() {
+                        deleteStudent(doc.id);
+                    });
+                    deleteCell.appendChild(deleteButton);
+                });
+            }).catch(function(error) {
+                console.error("Błąd podczas pobierania uczniów: ", error);
             });
         }
     </script>
 </head>
 
 <body>
-    <h1>Strona Główna</h1>
-
-    <h2>Dodaj ucznia</h2>
-    <input type="text" id="student-name" placeholder="Imię ucznia">
+    <h1>Uczniowie</h1>
+    <div>
+        <label for="name">Imię ucznia:</label>
+        <input type="text" id="name" required>
+    </div>
+    <div>
+        <label for="number">Numer ucznia:</label>
+        <input type="number" id="number" required>
+    </div>
     <button onclick="addStudent()">Dodaj ucznia</button>
-
+    <hr>
     <h2>Lista uczniów</h2>
-    <ul id="student-list"></ul>
-
-    <h2>Wprowadź punkty</h2>
-    <input type="text" id="student-id" placeholder="ID ucznia">
-    <input type="text" id="day" placeholder="Dzień">
-    <input type="text" id="points" placeholder="Punkty">
-    <button onclick="savePoints(document.getElementById('student-id').value, document.getElementById('day').value, document.getElementById('points').value)">Zapisz punkty</button>
-    
-    <button onclick="signOut()">Wyloguj</button>
-    <a href="settings.html">
-        <button>Ustawienia</button>
-    </a>
+    <table id="students-table">
+        <tr>
+            <th>ID</th>
+            <th>Imię</th>
+            <th>Numer</th>
+            <th>Akcje</th>
+        </tr>
+    </table>
 
     <script>
-        // Pobieranie listy uczniów z bazy danych i wyświetlanie na stronie
-        var studentList = document.getElementById('student-list');
-
-        function renderStudent(studentId, studentName) {
-            var listItem = document.createElement('li');
-            listItem.textContent = studentName;
-
-            var deleteButton = document.createElement('button');
-            deleteButton.textContent = 'Usuń';
-            deleteButton.addEventListener('click', function() {
-                deleteStudent(studentId);
-            });
-
-            listItem.appendChild(deleteButton);
-            studentList.appendChild(listItem);
-        }
-
-        function loadStudents() {
-            var studentsRef = database.ref('students');
-            studentsRef.on('child_added', function(snapshot) {
-                var studentId = snapshot.key;
-                var studentName = snapshot.val().name;
-                renderStudent(studentId, studentName);
-            });
-
-            studentsRef.on('child_removed', function(snapshot) {
-                var studentId = snapshot.key;
-                var listItem = studentList.querySelector('[data-student-id="' + studentId + '"]');
-                if (listItem) {
-                    studentList.removeChild(listItem);
-                }
-            });
-        }
-
-        window.onload = function() {
-            loadStudents();
-        };
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (!user) {
+                // Użytkownik niezalogowany
+                window.location.href = "index.html";
+            } else {
+                getStudents(); // Pobranie listy uczniów przy załadowaniu strony
+            }
+        });
     </script>
 </body>
 
